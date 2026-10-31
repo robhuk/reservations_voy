@@ -8,310 +8,292 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="XC Seat Occupancy">
-<title>XC Seat Occupancy – Preview</title>
+<meta name="apple-mobile-web-app-title" content="XC Reservations">
+<title>XC Reservation List</title>
 <style>
-:root{--xc:#a50034;--gold:#f2c94c;--ink:#20232a;--muted:#68717d;--line:#e2e6eb;--bg:#f4f6f8;--red:#dc4545;--orange:#f59e0b;--green:#22a06b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-header{background:var(--xc);color:white;padding:18px 20px 16px;box-shadow:0 2px 8px #0002}
-header .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}header h1{margin:3px 0;font-size:22px}header p{margin:0;color:#ffffffcf;font-size:13px}
-main{max-width:980px;margin:18px auto;padding:0 14px 40px}.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #17212b08}
-.panel h2{font-size:16px;margin:0 0 12px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{display:block;font-size:12px;font-weight:700;color:#505967;margin-bottom:5px}select,input[type=file],textarea{width:100%;border:1px solid #cfd5dc;border-radius:9px;padding:11px;background:white;color:var(--ink);font:inherit}
-textarea{min-height:145px;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{border:1px solid var(--line);border-radius:11px;padding:11px}.stat strong{display:block;font-size:23px}.stat span{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:#4c5561;margin-top:12px}
-.coach-tabs{display:flex;gap:7px;overflow:auto;padding-bottom:5px}.tab{border:1px solid var(--line);background:white;border-radius:9px;padding:9px 13px;white-space:nowrap;font-weight:700}.tab.active{background:var(--xc);border-color:var(--xc);color:white}
-.coach-title{display:flex;justify-content:space-between;align-items:center;margin:15px 0 10px}.coach-title strong{font-size:15px}.coach-title small{color:var(--muted)}
-.seat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:570px;margin:auto;padding:15px;border:2px solid #d7dce2;border-radius:28px;background:linear-gradient(90deg,#f8f9fa 0 47%,#e9edf1 47% 53%,#f8f9fa 53%)}
-.seat{border:0;border-radius:8px;min-height:53px;color:white;font-weight:800;font-size:15px;box-shadow:inset 0 -3px #00000018;cursor:pointer;position:relative}
-.seat small{display:block;font-size:9px;font-weight:500;opacity:.9}.seat.red{background:var(--red)}.seat.orange{background:var(--orange);color:#352400}.seat.green{background:var(--green)}
-.aisle{grid-column:span 4;text-align:center;color:#89919b;font-size:10px;letter-spacing:.12em;padding:2px}
-.note{font-size:12px;color:var(--muted);margin:10px 0 0}.uploadrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}.button{border:0;background:var(--gold);color:#29230d;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer;margin:8px 7px 0 0}.button.secondary{background:#eef0f3;color:#343b45}.small{font-size:12px;color:var(--muted)}
-#details,#filemsg{font-size:13px;color:#4d5662;min-height:18px}.statusmsg{font-size:13px;margin-top:9px;font-weight:650}
-
-.table-preview{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-.table-preview th,.table-preview td{border:1px solid var(--line);padding:7px 9px;text-align:left}
-.table-preview th{background:#f1f3f5;color:#424a54}
-.table-preview tr:nth-child(even) td{background:#fafbfc}
+:root{--xc:#a50034;--gold:#f2c94c;--ink:#20232a;--muted:#68717d;--line:#e2e6eb;--bg:#f3f5f7;--green:#18794e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--xc);color:#fff;padding:19px 18px 17px;box-shadow:0 2px 8px #0002}
+header .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.82}
+header h1{font-size:23px;margin:3px 0}
+header p{font-size:13px;margin:0;color:#ffffffd9}
+main{max-width:1000px;margin:17px auto;padding:0 13px 42px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #17212b08}
+h2{font-size:16px;margin:0 0 10px}
+.service-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.service-fields input{width:100%;min-width:0;padding:12px;border:1px solid #cbd2da;border-radius:9px;background:#fff;font:inherit}
+#headcode{font:900 20px ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}
+#headcodeDisplay{font-weight:900;font-size:18px;letter-spacing:.04em;color:var(--xc)}
+#dateDisplay{margin-left:12px;color:var(--muted);font-size:13px}
+label{display:block;font-size:12px;font-weight:750;color:#505967;margin:0 0 6px}
+textarea{width:100%;min-height:220px;resize:vertical;border:1px solid #cbd2da;border-radius:10px;padding:12px;background:#fff;color:var(--ink);font:13px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace}
+textarea:focus{outline:2px solid #a5003430;border-color:var(--xc)}
+.hint,.small{font-size:12px;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+button{border:0;border-radius:9px;padding:11px 15px;font:700 13px system-ui;cursor:pointer}
+.primary{background:var(--gold);color:#29230d}
+.secondary{background:#eef0f3;color:#303741}
+.danger{background:#fff0f2;color:#a50034}
+button:disabled{opacity:.45;cursor:not-allowed}
+.status{font-size:13px;margin-top:10px;color:#18794e;font-weight:650;min-height:18px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.metric{border:1px solid var(--line);border-radius:10px;padding:10px}
+.metric strong{display:block;font-size:22px}
+.metric span{font-size:11px;color:var(--muted)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}
+th{background:#f1f3f5;color:#434b55;font-size:11px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even){background:#fafbfc}
+.empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:13px}
+.coach-heading td{background:#f7e9ee!important;color:var(--xc);font-weight:800;border-top:1px solid #e8c9d4}
+#appStatus{font-size:11px;color:#64707d}
+@media(max-width:560px){.service-fields{grid-template-columns:1fr}header{padding:16px}header h1{font-size:21px}.panel{padding:13px}.summary{gap:6px}.metric{padding:8px}.metric strong{font-size:19px}.actions button{flex:1 1 calc(50% - 8px)}textarea{min-height:190px}}
 @media print{
- body{background:white}
- header,.panel:not(#exportPanel),#exportPanel>p,#exportPanel>.fields,#exportPanel>div:not(#tablePreview){display:none!important}
+ @page{size:A4 portrait;margin:12mm}
+ body{background:white;font-size:10pt}
+ header,#pastePanel,#exportControls,#appStatusPanel,.no-print{display:none!important}
  main{max-width:none;margin:0;padding:0}
- #exportPanel{border:0;box-shadow:none;padding:0}
- #tablePreview{overflow:visible!important}
- .table-preview{font-size:10pt;white-space:normal}
- .table-preview th,.table-preview td{padding:5px}
+ .panel{border:0;box-shadow:none;padding:0;margin:0}
+ #resultsPanel h2{font-size:16pt;margin-bottom:5mm}
+ #printMeta{display:block!important}\n #serviceDetails{display:block!important;border:0;box-shadow:none;padding:0 0 5mm;margin:0 0 4mm}\n #serviceDetails h2{display:none}
+ .table-wrap{overflow:visible;border:0}
+ table{font-size:8.5pt;white-space:normal}
+ th{position:static;background:#eee!important;print-color-adjust:exact}
+ th,td{padding:5px;border:1px solid #bbb}
+ tr{break-inside:avoid}
 }
-@media(max-width:560px){main{margin-top:12px}.fields,.uploadrow{grid-template-columns:1fr}.panel{padding:13px}.stats{gap:6px}.stat{padding:9px}.stat strong{font-size:20px}.seat-grid{gap:6px;padding:10px}.seat{min-height:48px;font-size:14px}}
 </style>
 </head>
 <body>
-<header><div class="eyebrow">CrossCountry • Staff tool</div><h1>Seat Occupancy</h1><p>Check reserved seats for a selected section of the journey</p></header>
+<header>
+ <div class="eyebrow">CrossCountry • Train Manager tool</div>
+ <h1>Reservation List</h1>
+ <p>Paste reservations from Genius, view the whole train and export a clean table</p>
+</header>
 <main>
-<section class="panel" style="padding:10px 14px"><div class="small" id="appStatus">App ready • reservation data is stored on this device when processed.</div></section>
-<section class="panel">
-<h2>Journey selection</h2>
-<div class="fields">
-<div><label for="origin">FROM</label><select id="origin"><option>Newcastle</option><option>Edinburgh</option><option>Berwick-upon-Tweed</option><option>York</option><option>Leeds</option><option>Sheffield</option><option>Derby</option><option>Birmingham New Street</option></select></div>
-<div><label for="destination">TO</label><select id="destination"><option>Birmingham New Street</option><option>Newcastle</option><option>York</option><option>Leeds</option><option>Sheffield</option><option>Derby</option><option>Edinburgh</option></select></div>
-</div>
-<p class="note">Choose the section you want to check. Seat colours update when you change the journey or paste a reservation list.</p>
+<section class="panel" id="appStatusPanel"><div id="appStatus">App ready • your pasted reservation list is saved on this device.</div></section>
+<section class="panel" id="serviceDetails">
+ <h2>Train details</h2>
+ <div class="service-fields">
+  <div><label for="headcode">HEADCODE</label><input id="headcode" type="text" maxlength="4" autocomplete="off" placeholder="e.g. 1V50"></div>
+  <div><label for="serviceDate">DATE</label><input id="serviceDate" type="date"></div>
+ </div>
+ <div id="serviceMeta"><strong id="headcodeDisplay">HEADCODE NOT ENTERED</strong><span id="dateDisplay"></span></div>
 </section>
-<section class="panel">
-<h2>Journey occupancy</h2>
-<div class="stats">
-<div class="stat"><strong id="occupied">0</strong><span><i class="dot" style="background:var(--red)"></i>Occupied</span></div>
-<div class="stat"><strong id="partial">0</strong><span><i class="dot" style="background:var(--orange)"></i>Partially free</span></div>
-<div class="stat"><strong id="free">0</strong><span><i class="dot" style="background:var(--green)"></i>Free</span></div>
-</div>
-<div class="legend"><span><i class="dot" style="background:var(--red)"></i>Occupied for whole selected section</span><span><i class="dot" style="background:var(--orange)"></i>Reserved for part of section</span><span><i class="dot" style="background:var(--green)"></i>No overlapping reservation</span></div>
+
+<section class="panel" id="pastePanel">
+ <h2>Paste from Genius</h2>
+ <label for="reservationText">COPY THE RESERVATION LIST FROM GENIUS AND PASTE IT BELOW</label>
+ <textarea id="reservationText" spellcheck="false" placeholder="Copy the reservation rows from Genius and paste them here…&#10;&#10;Example:&#10;Coach   Seat    Cl   Leg&#10;A       4A(W)   1    Leeds-Chfd&#10;A       4A(W)   1    Chltnhm-BrstlTM&#10;C       3A(G)   2    Leeds-Worcpwy"></textarea>
+ <p class="hint">Paste the copied Genius table exactly as it appears. The app reads Coach, Seat, Class and Leg, and keeps repeated entries as separate journey legs for the same seat.</p>
+ <div class="actions">
+  <button class="primary" id="processBtn" type="button">Process reservations</button>
+  <button class="secondary" id="clearBtn" type="button">Clear all</button>
+ </div>
+ <div class="status" id="pasteStatus" aria-live="polite">Waiting for reservations to be pasted.</div>
+ <div class="summary">
+  <div class="metric"><strong id="rowCount">0</strong><span>Reservation legs</span></div>
+  <div class="metric"><strong id="seatCount">0</strong><span>Distinct seats</span></div>
+  <div class="metric"><strong id="coachCount">0</strong><span>Coaches</span></div>
+ </div>
 </section>
-<section class="panel">
-<h2>Seating plan</h2>
-<div class="coach-tabs" id="tabs"><button class="tab active" data-coach="A">Coach A</button><button class="tab" data-coach="B">Coach B</button><button class="tab" data-coach="C">Coach C</button><button class="tab" data-coach="D">Coach D</button></div>
-<div class="coach-title"><strong id="coachname">Coach A – Standard Class</strong><small>Illustrative layout</small></div>
-<div class="seat-grid" id="seats"></div>
-<p id="details" class="note">Tap a seat to see its reservation details.</p>
-<p class="note">Seat labels are numeric only. This is a schematic preview, not an official Voyager seat plan; the final version can use your uploaded carriage diagram.</p>
+
+<section class="panel" id="resultsPanel">
+ <h2>Whole-train reservation table</h2>
+ <div id="printMeta" class="small" style="display:none;margin-bottom:10px"></div>
+ <div class="table-wrap" id="tableWrap">
+  <div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>
+ </div>
 </section>
-<section class="panel">
-<h2>Paste reservations</h2>
-<label for="reservationText">PASTE THE COPIED RESERVATION TABLE</label>
-<textarea id="reservationText" spellcheck="false" placeholder="Reservations&#10;Sort by Coach&#10;C   Seat   Cl   Leg   Notes&#10;A   4A(W)   1   Leeds-Chfd&#10;A   4A(W)   1   Chltnhm-BrstlTM&#10;C   3A(G)   2   Leeds-Worcpwy"></textarea>
-<p class="note">Paste the copied table exactly as it appears in the reservations screen. The parser will read Coach, Seat, Class and Leg columns, including seat formats such as 4A(W), 6A(G) and 9A. Repeated rows for the same seat are treated as separate reservation legs, not separate seats.</p>
-<button class="button" id="applyReservations" type="button">Process reservations</button>
-<button class="button secondary" id="clearReservations" type="button">Clear list</button>
-<div id="pasteStatus" class="statusmsg" aria-live="polite">No pasted reservations loaded.</div>
-<div id="previewRows" class="small" style="margin-top:8px"></div>
-</section>
-<section class="panel" id="exportPanel">
-<h2>Export reservation list</h2>
-<p class="note">Export the reservations currently loaded above as a clear table. You can export all coaches or just the coach currently selected.</p>
-<div class="fields">
- <div><label for="exportScope">EXPORT SCOPE</label><select id="exportScope"><option value="all">All loaded coaches</option><option value="current">Current coach only</option></select></div>
- <div><label for="exportFormat">TABLE FORMAT</label><select id="exportFormat"><option value="full">Full reservation detail</option><option value="seat">Grouped by seat</option></select></div>
-</div>
-<div style="margin-top:10px">
- <button class="button" id="downloadCsv" type="button">Download CSV table</button>
- <button class="button secondary" id="copyTable" type="button">Copy table</button>
- <button class="button secondary" id="printTable" type="button">Print / Save as PDF</button>
-</div>
-<div id="exportStatus" class="small" style="margin-top:8px" aria-live="polite">Load reservation data to enable exports.</div>
-<div id="tablePreview" style="overflow-x:auto;margin-top:12px"></div>
-</section>
-<section class="panel">
-<h2>Upload seating plan</h2>
-<div><label for="plan">SEATING PLAN (PDF / IMAGE)</label><input id="plan" type="file" accept=".pdf,image/*"><p class="small">The uploaded plan is not yet automatically converted into a seat layout in this prototype.</p></div>
+
+<section class="panel" id="exportControls">
+ <h2>Export reservations</h2>
+ <p class="hint">Export the complete train reservation list. Choose a grouped table to combine all legs belonging to the same coach and seat.</p>
+ <label for="tableFormat">TABLE FORMAT</label>
+ <select id="tableFormat" style="width:100%;padding:11px;border:1px solid #cbd2da;border-radius:9px;background:white;font:inherit">
+  <option value="legs">Full list – one row per reservation leg</option>
+  <option value="grouped">Grouped – one row per seat with all reserved legs</option>
+ </select>
+ <div class="actions">
+  <button class="primary" id="copyBtn" type="button" disabled>Copy table</button>
+  <button class="secondary" id="csvBtn" type="button" disabled>Download CSV</button>
+  <button class="secondary" id="emailBtn" type="button" disabled>Email table</button>
+  <button class="secondary" id="pdfBtn" type="button" disabled>Print / Save PDF</button>
+ </div>
+ <div class="status" id="exportStatus" aria-live="polite"></div>
 </section>
 </main>
 <script>
-const coaches=["A","B","C","D","E","F"];
-let current="A", reservations=[];
-const stationNames={
- "Leeds":"Leeds","Chfd":"Chesterfield","Chesterfield":"Chesterfield",
- "Sheffld":"Sheffield","Sheffield":"Sheffield","Drby":"Derby","Derby":"Derby",
- "Worcpwy":"Worcester Parkway","Worcester Parkway":"Worcester Parkway",
- "TmwthHL":"Tamworth","Tamworth":"Tamworth","BhamNwS":"Birmingham New Street",
- "Birmingham":"Birmingham New Street","Birmingham New Street":"Birmingham New Street",
- "Chltnhm":"Cheltenham Spa","Cheltenham":"Cheltenham Spa",
- "Gloster":"Gloucester","Gloucester":"Gloucester","BrstlTM":"Bristol Temple Meads",
- "Bristol Temple Meads":"Bristol Temple Meads","BrstPwy":"Bristol Parkway",
- "Bristol Parkway":"Bristol Parkway","Nwptrtg":"Newport","Newport":"Newport",
- "NAbt":"Newton Abbot","Newton Abbot":"Newton Abbot","ExetrSD":"Exeter St Davids",
- "Exeter":"Exeter St Davids","Taunton":"Taunton","Totnes":"Totnes",
- "Plymth":"Plymouth","Plymouth":"Plymouth","Truro":"Truro",
- "Penznce":"Penzance","Penzance":"Penzance","Redruth":"Redruth",
- "Liskard":"Liskeard","Liskeard":"Liskeard","BodmnPw":"Bodmin Parkway",
- "StAustl":"St Austell","StErth":"St Erth","Parr":"Par",
- "Cborne":"Camborne","TiviPw":"Tiverton Parkway","Tiverton Parkway":"Tiverton Parkway",
- "WkfldWg":"Wakefield Westgate","Wakefield":"Wakefield Westgate",
- "Berwick":"Berwick-upon-Tweed","Newcastle":"Newcastle","Edinburgh":"Edinburgh",
- "York":"York","Morpeth":"Morpeth","Durham":"Durham","Darlington":"Darlington"
-};
-function canonicalStation(s){return stationNames[s]||stationNames[s.trim()]||s.trim()}
-function parseLine(line){
- // Clipboard text may contain tabs, repeated spaces, or a mix of both.
- const clean=line.replace(/^\s*[•|]\s*/,"").trim();
- const m=clean.match(/^([A-F])\s+(\d+[A-D]?(?:\([A-Z]+\))?)\s+([12])\s+([^\s]+)(?:\s+.*)?$/i);
+const STORAGE={text:"xcReservations.geniusText",rows:"xcReservations.rows"};
+let reservations=[];
+const coachOrder=["A","B","C","D","E","F","G","H"];
+function localToday(){
+ const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function serviceInfo(){
+ return {headcode:document.getElementById("headcode").value.trim().toUpperCase(),date:document.getElementById("serviceDate").value||localToday()};
+}
+function displayServiceInfo(){
+ const info=serviceInfo();
+ document.getElementById("headcodeDisplay").textContent=info.headcode||"HEADCODE NOT ENTERED";
+ document.getElementById("dateDisplay").textContent=new Date(info.date+"T12:00:00").toLocaleDateString("en-GB");
+}
+function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function parseReservationLine(line){
+ const s=line.trim().replace(/^[•|]\s*/,"");
+ // Genius clipboard rows: Coach, Seat (possibly with availability suffix), Class, Leg, optional Notes.
+ // Accept tab-separated rows and whitespace-collapsed copied text.
+ let cells=s.includes("\t")?s.split("\t").map(x=>x.trim()).filter((x,i,a)=>!(x===""&&i>a.length-4)):null;
+ if(cells && cells.length>=4){
+   // Ignore leading blank selection/checkbox column if present.
+   while(cells.length>4 && !/^[A-H]$/i.test(cells[0]))cells.shift();
+   const coach=cells[0],seat=cells[1],cls=cells[2],leg=cells[3];
+   if(/^[A-H]$/i.test(coach)&&/^\d+[A-D]?(?:\([A-Z]+\))?$/i.test(seat)&&/^[12]$/.test(cls)&&/^[^-]+-.+$/.test(leg))
+     return makeRow(coach,seat,cls,leg,cells.slice(4).join(" "));
+ }
+ const m=s.match(/^(?:\S+\s+)?([A-H])\s+(\d+[A-D]?(?:\([A-Z]+\))?)\s+([12])\s+([A-Za-z0-9]+-[A-Za-z0-9]+)(?:\s+(.*))?$/i);
  if(!m)return null;
- const seatMatch=m[2].match(/^(\d+)/);
- const leg=m[4].split("-");
- if(!seatMatch||leg.length!==2)return null;
- return {coach:m[1].toUpperCase(),seat:seatMatch[1],seatRaw:m[2],class:m[3],from:canonicalStation(leg[0]),to:canonicalStation(leg[1]),legRaw:m[4]};
+ return makeRow(m[1],m[2],m[3],m[4],m[5]||"");
+}
+function makeRow(coach,seat,cls,leg,notes){
+ const parts=leg.split("-");
+ return {coach:coach.toUpperCase(),seat:seat.toUpperCase(),class:cls,from:parts[0],to:parts.slice(1).join("-"),leg,notes:notes||""};
 }
 function parseReservations(raw){
- const rows=[],bad=[];
+ const rows=[],ignored=[];
  raw.split(/\r?\n/).forEach((line,i)=>{
   const t=line.trim();
-  if(!t||/^(reservations|sort by|coach\s+seat|c\s+seat)/i.test(t)||/^\-+\s*\(#\)/.test(t))return;
-  const r=parseLine(t);
+  if(!t||/^(reservations|sort by|coach\s+seat|c\s+seat)/i.test(t)||/^[-–—]+\s*\(#\)/.test(t))return;
+  const r=parseReservationLine(line);
   if(r)rows.push(r);
-  else if(/[A-F]\s+\d+[A-D]?(?:\([A-Z]+\))?\s+[12]\s+/.test(t))bad.push(i+1);
+  else if(/[A-H]\s+\d+[A-D]?(?:\([A-Z]+\))?\s+[12]\s+/.test(t))ignored.push(i+1);
  });
- return {rows,bad};
+ return {rows,ignored};
 }
-function render(){
- const coachRows=reservations.filter(r=>r.coach===current);
- const seatNums=[...new Set(coachRows.map(r=>Number(r.seat)))].sort((a,b)=>a-b);
- // Keep a useful illustrative base layout before a reservation list is pasted.
- const nums=seatNums.length?seatNums:Array.from({length:16},(_,i)=>i+1);
- const a=document.getElementById("origin").value,b=document.getElementById("destination").value;
- let counts={red:0,orange:0,green:0},html="";
- nums.forEach((n,i)=>{
-   const matching=coachRows.filter(r=>Number(r.seat)===n);
-   // The exact interval colour is calculated once a full calling-point route is configured.
-   // Until then, any reservation leg matching the selected endpoints is shown as reserved.
-   const overlaps=matching.filter(r=>r.from===a&&r.to===b);
-   const s=overlaps.length?"red":matching.length?"orange":"green";
-   counts[s]++;
-   html+=`<button class="seat ${s}" data-seat="${n}" title="Seat ${n}">${n}<small>${s==="red"?"Reserved":s==="orange"?"Other leg":"No listed booking"}</small></button>`;
-   if((i+1)%8===0&&i!==nums.length-1)html+='<div class="aisle">CENTRE AISLE</div>';
+function selectedRows(){
+ const format=document.getElementById("tableFormat").value;
+ const sorted=[...reservations].sort((a,b)=>{
+  const ac=coachOrder.indexOf(a.coach),bc=coachOrder.indexOf(b.coach);
+  return (ac<0?99:ac)-(bc<0?99:bc)||parseInt(a.seat)-parseInt(b.seat)||a.seat.localeCompare(b.seat)||a.from.localeCompare(b.from);
  });
- document.getElementById("seats").innerHTML=html;
- document.getElementById("occupied").textContent=counts.red;
- document.getElementById("partial").textContent=counts.orange;
- document.getElementById("free").textContent=counts.green;
- document.getElementById("coachname").textContent=`Coach ${current} – ${coachRows.some(r=>r.class==="1")?"Class 1 reservations present":"Reservation view"}`;
- document.querySelectorAll(".seat").forEach(btn=>btn.addEventListener("click",()=>{
-   const rows=coachRows.filter(r=>Number(r.seat)===Number(btn.dataset.seat));
-   document.getElementById("details").textContent=rows.length?
-    `Coach ${current}, seat ${btn.dataset.seat}: ${rows.map(r=>`${r.from}–${r.to} (Class ${r.class}; source seat ${r.seatRaw})`).join("; ")}.`:
-    `Coach ${current}, seat ${btn.dataset.seat}: no reservation row found.`;
- }));
+ if(format==="legs")return sorted.map(r=>({coach:r.coach,seat:r.seat,class:r.class,leg:r.leg,notes:r.notes}));
+ const groups=new Map();
+ sorted.forEach(r=>{
+  const key=[r.coach,r.seat,r.class].join("|");
+  if(!groups.has(key))groups.set(key,{coach:r.coach,seat:r.seat,class:r.class,legs:[]});
+  groups.get(key).legs.push(r.leg);
+ });
+ return [...groups.values()].map(g=>({coach:g.coach,seat:g.seat,class:g.class,leg:g.legs.join("; "),notes:`${g.legs.length} leg${g.legs.length===1?"":"s"}`}));
 }
-document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
- document.querySelector(".tab.active").classList.remove("active");btn.classList.add("active");current=btn.dataset.coach;render()
-}));
-document.getElementById("applyReservations").addEventListener("click",()=>{
+function renderTable(){
+ const wrap=document.getElementById("tableWrap");
+ if(!reservations.length){wrap.innerHTML='<div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>';return}
+ const rows=selectedRows();
+ const headers=["Coach","Seat","Class","Reserved leg(s)","Notes"];
+ let html='<table id="reservationTable"><thead><tr>'+headers.map(h=>`<th>${h}</th>`).join("")+'</tr></thead><tbody>';
+ let previous="";
+ rows.forEach(r=>{
+  if(r.coach!==previous){html+=`<tr class="coach-heading"><td colspan="5">Coach ${escapeHtml(r.coach)}</td></tr>`;previous=r.coach}
+  html+=`<tr><td>${escapeHtml(r.coach)}</td><td>${escapeHtml(r.seat)}</td><td>${escapeHtml(r.class)}</td><td>${escapeHtml(r.leg)}</td><td>${escapeHtml(r.notes)}</td></tr>`;
+ });
+ html+='</tbody></table>';wrap.innerHTML=html;
+}
+function updateSummary(){
+ const seats=new Set(reservations.map(r=>r.coach+"|"+r.seat));
+ const coaches=new Set(reservations.map(r=>r.coach));
+ document.getElementById("rowCount").textContent=reservations.length;
+ document.getElementById("seatCount").textContent=seats.size;
+ document.getElementById("coachCount").textContent=coaches.size;
+ const enabled=reservations.length>0;
+ ["copyBtn","csvBtn","emailBtn","pdfBtn"].forEach(id=>document.getElementById(id).disabled=!enabled);
+ renderTable();
+}
+function tsv(rows){
+ const keys=["coach","seat","class","leg","notes"];
+ const clean=v=>String(v??"").replace(/\t/g," ").replace(/\r?\n/g," ");
+ const info=serviceInfo();
+ return [`HEADCODE: ${info.headcode||"Not entered"}    DATE: ${info.date}`, "", ["Coach","Seat","Class","Reserved leg(s)","Notes"].join("\t"),...rows.map(r=>keys.map(k=>clean(r[k])).join("\t"))].join("\r\n");
+}
+function csv(rows){
+ const keys=["coach","seat","class","leg","notes"];
+ const esc=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+ const info=serviceInfo();
+ return [esc(`HEADCODE: ${info.headcode||"Not entered"}`)+","+esc(`DATE: ${info.date}`), "", ["Coach","Seat","Class","Reserved leg(s)","Notes"].map(esc).join(","),...rows.map(r=>keys.map(k=>esc(r[k])).join(","))].join("\r\n");
+}
+document.getElementById("processBtn").addEventListener("click",()=>{
  const result=parseReservations(document.getElementById("reservationText").value);
  reservations=result.rows;
- const found=[...new Set(reservations.map(r=>r.coach))];
- document.getElementById("tabs").innerHTML=(found.length?found:["A","C","D","F"]).map(c=>`<button class="tab ${c===current?"active":""}" data-coach="${c}">Coach ${c}</button>`).join("");
- if(found.length&&!found.includes(current))current=found[0];
- document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
-  document.querySelector(".tab.active")?.classList.remove("active");btn.classList.add("active");current=btn.dataset.coach;render()
- }));
- render();
- document.getElementById("pasteStatus").textContent=`Read ${reservations.length} reservation leg rows across ${found.length} coaches: ${found.join(", ")||"none"}.`+(result.bad.length?` ${result.bad.length} possible reservation line(s) need checking.`:"");
- document.getElementById("pasteStatus").style.color=result.bad.length?"#a35a00":"#18794e";
- updateExportPreview();
- document.getElementById("previewRows").textContent=reservations.slice(0,5).map(r=>`${r.coach} · Seat ${r.seat} · Class ${r.class} · ${r.from}–${r.to}`).join("  |  ")+(reservations.length>5?"  |  …":"");
+ try{localStorage.setItem(STORAGE.text,document.getElementById("reservationText").value);localStorage.setItem(STORAGE.rows,JSON.stringify(reservations))}catch(e){}
+ updateSummary();
+ document.getElementById("pasteStatus").textContent=`Processed ${reservations.length} reservation legs across ${new Set(reservations.map(r=>r.coach)).size} coaches.`+(result.ignored.length?` ${result.ignored.length} possible reservation row(s) could not be read.`:"");
+ document.getElementById("pasteStatus").style.color=result.ignored.length?"#a35a00":"#18794e";
+ document.getElementById("exportStatus").textContent=reservations.length?"Whole-train table ready to export.":"No reservation rows were recognised. Check that the copied Genius table includes Coach, Seat, Cl and Leg.";
 });
-document.getElementById("clearReservations").addEventListener("click",()=>{
- document.getElementById("reservationText").value="";reservations=[];current="A";
- document.getElementById("tabs").innerHTML=["A","B","C","D"].map((c,i)=>`<button class="tab ${i===0?"active":""}" data-coach="${c}">Coach ${c}</button>`).join("");
- document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelector(".tab.active")?.classList.remove("active");btn.classList.add("active");current=btn.dataset.coach;render()}));
- render();updateExportPreview();document.getElementById("pasteStatus").textContent="Reservation list cleared.";
- document.getElementById("previewRows").textContent="";
+document.getElementById("clearBtn").addEventListener("click",()=>{
+ if(!window.confirm("Clear all train details and reservations? This cannot be undone."))return;
+ reservations=[];
+ document.getElementById("reservationText").value="";
+ document.getElementById("headcode").value="";
+ document.getElementById("serviceDate").value=localToday();
+ document.getElementById("tableFormat").value="legs";
+ try{
+  [STORAGE.text,STORAGE.rows,"xcReservations.headcode","xcReservations.date"].forEach(k=>localStorage.removeItem(k));
+ }catch(e){}
+ displayServiceInfo();
+ updateSummary();
+ document.getElementById("pasteStatus").textContent="All train details and reservations have been cleared.";
+ document.getElementById("exportStatus").textContent="";
 });
-
-function exportRows(){
- const scope=document.getElementById("exportScope").value;
- const format=document.getElementById("exportFormat").value;
- let rows=reservations.filter(r=>scope==="all"||r.coach===current);
- rows=[...rows].sort((a,b)=>a.coach.localeCompare(b.coach)||Number(a.seat)-Number(b.seat)||a.from.localeCompare(b.from));
- if(format==="seat"){
-  const grouped=new Map();
-  rows.forEach(r=>{
-   const key=`${r.coach}|${r.seat}|${r.class}`;
-   if(!grouped.has(key))grouped.set(key,{coach:r.coach,seat:r.seat,class:r.class,legs:[]});
-   grouped.get(key).legs.push(`${r.from}–${r.to}`);
-  });
-  return [...grouped.values()].map(r=>({...r,leg:r.legs.join("; "),legs:undefined}));
- }
- return rows.map(r=>({coach:r.coach,seat:r.seat,class:r.class,leg:`${r.from}–${r.to}`,sourceSeat:r.seatRaw}));
-}
-function exportColumns(rows){
- if(!rows.length)return [];
- return Object.keys(rows[0]).filter(k=>k!=="legs");
-}
-function tableHtml(rows){
- if(!rows.length)return '<p class="small">No reservation rows to display. Paste and process a reservation list first.</p>';
- const cols=exportColumns(rows);
- const labels={coach:"Coach",seat:"Seat",class:"Class",leg:"Reserved leg",sourceSeat:"Original seat reference"};
- return `<table class="table-preview"><thead><tr>${cols.map(k=>`<th>${labels[k]||k}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(k=>`<td>${String(r[k]??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-}
-function csvText(rows){
- const cols=exportColumns(rows);
- const esc=v=>`"${String(v??"").replace(/"/g,'""')}"`;
- return [cols.map(esc).join(","),...rows.map(r=>cols.map(k=>esc(r[k])).join(","))].join("\r\n");
-}
-function tsvText(rows){
- const cols=exportColumns(rows);
- const clean=v=>String(v??"").replace(/\t/g," ").replace(/\r?\n/g," ");
- return [cols.join("\t"),...rows.map(r=>cols.map(k=>clean(r[k])).join("\t"))].join("\r\n");
-}
-function updateExportPreview(){
- const rows=exportRows();
- document.getElementById("tablePreview").innerHTML=tableHtml(rows);
- document.getElementById("exportStatus").textContent=rows.length?`${rows.length} reservation row(s) ready to export.`:"No reservation rows loaded.";
-}
-document.getElementById("exportScope").addEventListener("change",updateExportPreview);
-document.getElementById("exportFormat").addEventListener("change",updateExportPreview);
-document.getElementById("downloadCsv").addEventListener("click",()=>{
- const rows=exportRows();if(!rows.length){updateExportPreview();return;}
- const blob=new Blob([csvText(rows)],{type:"text/csv;charset=utf-8"});
+document.getElementById("tableFormat").addEventListener("change",renderTable);
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+ const data=tsv(selectedRows());
+ try{await navigator.clipboard.writeText(data);document.getElementById("exportStatus").textContent="Table copied. Paste it into Excel, Word or another document."}
+ catch(e){document.getElementById("exportStatus").textContent="Clipboard permission unavailable. Use Download CSV instead."}
+});
+document.getElementById("csvBtn").addEventListener("click",()=>{
+ const blob=new Blob(["\ufeff"+csv(selectedRows())],{type:"text/csv;charset=utf-8"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="XC-reservation-list.csv";a.click();URL.revokeObjectURL(url);
- document.getElementById("exportStatus").textContent=`Downloaded ${rows.length} reservation row(s) as CSV.`;
+ a.href=url;a.download="XC-whole-train-reservations.csv";a.click();URL.revokeObjectURL(url);
+ document.getElementById("exportStatus").textContent="CSV reservation table downloaded.";
 });
-document.getElementById("copyTable").addEventListener("click",async()=>{
- const rows=exportRows();if(!rows.length){updateExportPreview();return;}
- const text=tsvText(rows);
- try{await navigator.clipboard.writeText(text);document.getElementById("exportStatus").textContent=`Copied ${rows.length} table row(s). Paste into Excel or another spreadsheet.`;}
- catch(e){document.getElementById("exportStatus").textContent="Clipboard access was blocked by the browser. Use Download CSV instead.";}
+document.getElementById("emailBtn").addEventListener("click",()=>{
+ const rows=selectedRows(),body=tsv(rows);
+ const info=serviceInfo();const subject=encodeURIComponent(`${info.headcode||"Train"} reservation list – ${info.date}`);
+ const mailBody=encodeURIComponent(`HEADCODE: ${info.headcode||"Not entered"}\\nDATE: ${info.date}\\n\\n${body}`);
+ window.location.href=`mailto:?subject=${subject}&body=${mailBody}`;
+ document.getElementById("exportStatus").textContent="Your email app should open with the reservation table in the message body.";
 });
-document.getElementById("printTable").addEventListener("click",()=>{
- const rows=exportRows();if(!rows.length){updateExportPreview();return;}
- updateExportPreview();window.print();
+document.getElementById("pdfBtn").addEventListener("click",()=>{
+ const info=serviceInfo();document.getElementById("printMeta").innerHTML=`<strong>${escapeHtml(info.headcode||"HEADCODE NOT ENTERED")}</strong> &nbsp; | &nbsp; ${escapeHtml(info.date)} &nbsp; | &nbsp; Whole-train reservation list (${reservations.length} reservation legs)`;
+ window.print();
 });
-
-
-// Keep the pasted source and processed reservation rows on this device.
-// Storage is deliberately separate from the service-worker cache, so app updates do not erase it.
-try {
- const savedText=localStorage.getItem("xcSeatOccupancy.reservationText");
- if(savedText!==null) document.getElementById("reservationText").value=savedText;
- const savedRows=localStorage.getItem("xcSeatOccupancy.reservations");
- if(savedRows){reservations=JSON.parse(savedRows);if(!Array.isArray(reservations))reservations=[];}
- const savedOrigin=localStorage.getItem("xcSeatOccupancy.origin");
- const savedDestination=localStorage.getItem("xcSeatOccupancy.destination");
- if(savedOrigin && [...document.getElementById("origin").options].some(o=>o.value===savedOrigin))document.getElementById("origin").value=savedOrigin;
- if(savedDestination && [...document.getElementById("destination").options].some(o=>o.value===savedDestination))document.getElementById("destination").value=savedDestination;
- const savedCoach=localStorage.getItem("xcSeatOccupancy.coach");
- if(savedCoach)current=savedCoach;
-} catch(e) {}
-function persistAppState(){
- try{
-  localStorage.setItem("xcSeatOccupancy.reservationText",document.getElementById("reservationText").value);
-  localStorage.setItem("xcSeatOccupancy.reservations",JSON.stringify(reservations));
-  localStorage.setItem("xcSeatOccupancy.origin",document.getElementById("origin").value);
-  localStorage.setItem("xcSeatOccupancy.destination",document.getElementById("destination").value);
-  localStorage.setItem("xcSeatOccupancy.coach",current);
- }catch(e){}
-}
-document.getElementById("reservationText").addEventListener("input",persistAppState);
-document.getElementById("origin").addEventListener("change",persistAppState);
-document.getElementById("destination").addEventListener("change",persistAppState);
-document.getElementById("applyReservations").addEventListener("click",persistAppState);
-document.getElementById("clearReservations").addEventListener("click",()=>{
- try{
-  localStorage.removeItem("xcSeatOccupancy.reservationText");
-  localStorage.removeItem("xcSeatOccupancy.reservations");
- }catch(e){}
+document.getElementById("reservationText").addEventListener("input",()=>{
+ try{localStorage.setItem(STORAGE.text,document.getElementById("reservationText").value)}catch(e){}
 });
-if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost")){
- window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("./sw.js").then(()=>{
-   document.getElementById("appStatus").textContent="App ready • offline support enabled • saved reservations remain on this device.";
-  }).catch(()=>{
-   document.getElementById("appStatus").textContent="App ready • offline installation is unavailable in this preview location.";
-  });
+document.getElementById("tableFormat").addEventListener("change",()=>{});
+try{
+ document.getElementById("serviceDate").value=localToday();
+ const savedHeadcode=localStorage.getItem("xcReservations.headcode");if(savedHeadcode)document.getElementById("headcode").value=savedHeadcode;
+ const savedDate=localStorage.getItem("xcReservations.date");if(savedDate)document.getElementById("serviceDate").value=savedDate;
+ displayServiceInfo();
+ document.getElementById("headcode").addEventListener("input",e=>{
+  e.target.value=e.target.value.toUpperCase().replace(/[^0-9A-Z]/g,"").slice(0,4);
+  displayServiceInfo();try{localStorage.setItem("xcReservations.headcode",e.target.value)}catch(err){}
  });
+ document.getElementById("serviceDate").addEventListener("change",e=>{
+  displayServiceInfo();try{localStorage.setItem("xcReservations.date",e.target.value)}catch(err){}
+ });
+ const text=localStorage.getItem(STORAGE.text);if(text!==null)document.getElementById("reservationText").value=text;
+ const saved=localStorage.getItem(STORAGE.rows);if(saved){const parsed=JSON.parse(saved);if(Array.isArray(parsed)){reservations=parsed;updateSummary();document.getElementById("pasteStatus").textContent=`Restored ${reservations.length} saved reservation legs from this device.`}}
+}catch(e){}
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(()=>{
+  document.getElementById("appStatus").textContent="App ready • offline support enabled • saved reservations are retained on this device.";
+ }).catch(()=>{}));
 }
-
-render();
-updateExportPreview();
 </script>
-</body></html>
+</body>
+</html>

@@ -1,13 +1,13 @@
 {
   "id": "./",
-  "name": "XC Seat Occupancy",
-  "short_name": "XC Seats",
-  "description": "CrossCountry train reservation and seat occupancy viewer.",
+  "name": "XC Reservation List",
+  "short_name": "XC Reservations",
+  "description": "Paste Genius train reservations, view the whole train and export reservation tables.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f4f6f8",
+  "background_color": "#f3f5f7",
   "theme_color": "#a50034",
   "icons": [
     {
