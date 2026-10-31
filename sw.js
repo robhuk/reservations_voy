@@ -1,4 +1,4 @@
-const CACHE_NAME="xc-reservation-list-v4";
+const CACHE_NAME="xc-reservation-list-v8";
 const APP_SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",event=>event.waitUntil((async()=>{
  const c=await caches.open(CACHE_NAME);await c.addAll(APP_SHELL);await self.skipWaiting();

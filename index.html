@@ -200,7 +200,9 @@ function parseReservationLine(line){
 }
 function makeRow(coach,seat,cls,leg,notes){
  const parts=leg.split("-");
- return {coach:coach.toUpperCase(),seat:seat.toUpperCase(),class:cls,from:parts[0],to:parts.slice(1).join("-"),leg,notes:notes||""};
+ // (W) and (G) are defunct Genius seat markers; omit them from all reports.
+ const cleanSeat=seat.toUpperCase().replace(/\((?:W|G)\)$/i,"").replace(/A$/i,"");
+ return {coach:coach.toUpperCase(),seat:cleanSeat,class:cls,from:parts[0],to:parts.slice(1).join("-"),leg,notes:notes||""};
 }
 function parseReservations(raw){
  const rows=[],ignored=[];
@@ -215,7 +217,7 @@ function parseReservations(raw){
 }
 function filteredReservations(){
  const coaches=document.getElementById("coachFilter").value.toUpperCase().split(/[ ,;]+/).map(x=>x.trim()).filter(Boolean);
- const seats=document.getElementById("seatFilter").value.toUpperCase().split(/[ ,;]+/).map(x=>x.trim()).filter(Boolean);
+ const seats=document.getElementById("seatFilter").value.toUpperCase().split(/[ ,;]+/).map(x=>x.trim().replace(/\((?:W|G)\)$/i,"").replace(/A$/i,"")).filter(Boolean);
  return reservations.filter(r=>(!coaches.length||coaches.includes(r.coach))&&(!seats.length||seats.includes(r.seat)));
 }
 function selectedRows(){
@@ -373,7 +375,7 @@ try{
   displayServiceInfo();try{localStorage.setItem("xcReservations.date",e.target.value)}catch(err){}
  });
  const text=localStorage.getItem(STORAGE.text);if(text!==null)document.getElementById("reservationText").value=text;
- const saved=localStorage.getItem(STORAGE.rows);if(saved){const parsed=JSON.parse(saved);if(Array.isArray(parsed)){reservations=parsed;updateSummary();document.getElementById("pasteStatus").textContent=`Restored ${reservations.length} saved reservation legs from this device.`}}
+ const saved=localStorage.getItem(STORAGE.rows);if(saved){const parsed=JSON.parse(saved);if(Array.isArray(parsed)){reservations=parsed.map(r=>({...r,seat:String(r.seat||"").toUpperCase().replace(/\((?:W|G)\)$/i,"").replace(/A$/i,"")}));try{localStorage.setItem(STORAGE.rows,JSON.stringify(reservations))}catch(e){}updateSummary();renderTable();document.getElementById("pasteStatus").textContent=`Restored ${reservations.length} saved reservation legs from this device.`}}
 }catch(e){}
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){
  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").then(()=>{
