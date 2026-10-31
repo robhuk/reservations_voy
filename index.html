@@ -52,13 +52,18 @@ tbody tr:nth-child(even){background:#fafbfc}
 #appStatus{font-size:11px;color:#64707d}
 @media(max-width:560px){.service-fields{grid-template-columns:1fr}header{padding:16px}header h1{font-size:21px}.panel{padding:13px}.summary{gap:6px}.metric{padding:8px}.metric strong{font-size:19px}.actions button{flex:1 1 calc(50% - 8px)}textarea{min-height:190px}}
 @media print{
- @page{size:A4 portrait;margin:12mm}
+ @page{size:A4 portrait;margin:18mm 12mm 20mm}
  body{background:white;font-size:10pt}
  header,#pastePanel,#exportControls,#appStatusPanel,.no-print{display:none!important}
  main{max-width:none;margin:0;padding:0}
  .panel{border:0;box-shadow:none;padding:0;margin:0}
- #resultsPanel h2{font-size:16pt;margin-bottom:5mm}
- #printMeta{display:block!important}\n #serviceDetails{display:block!important;border:0;box-shadow:none;padding:0 0 5mm;margin:0 0 4mm}\n #serviceDetails h2{display:none}
+ #resultsPanel h2{display:none}
+ #printHeader{display:block!important;font-size:15pt;font-weight:600;margin:0 0 8mm;padding:0 0 4mm;border-bottom:2px solid #a50034}
+ #printHeader strong{font-weight:900}
+ #printFooter{display:block!important;position:fixed;left:0;right:0;bottom:-14mm;border-top:1px solid #888;padding-top:3mm;font-size:8pt;color:#444;text-align:center}
+ #printFooter .page-number:before{content:"Page " counter(page) " of " counter(pages) " - "}
+ #printMeta{display:none!important}
+ #serviceDetails{display:none!important}
  .table-wrap{overflow:visible;border:0}
  table{font-size:8.5pt;white-space:normal}
  th{position:static;background:#eee!important;print-color-adjust:exact}
@@ -103,6 +108,8 @@ tbody tr:nth-child(even){background:#fafbfc}
 
 <section class="panel" id="resultsPanel">
  <h2>Whole-train reservation table</h2>
+ <div id="printHeader" style="display:none"></div>
+ <div id="printFooter" style="display:none"><span class="page-number"></span>Genius Export - Generated at <span id="printTime"></span> - <span id="printDate"></span></div>
  <div id="printMeta" class="small" style="display:none;margin-bottom:10px"></div>
  <div class="table-wrap" id="tableWrap">
   <div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>
@@ -267,7 +274,15 @@ document.getElementById("emailBtn").addEventListener("click",()=>{
  document.getElementById("exportStatus").textContent="Your email app should open with the reservation table in the message body.";
 });
 document.getElementById("pdfBtn").addEventListener("click",()=>{
- const info=serviceInfo();document.getElementById("printMeta").innerHTML=`<strong>${escapeHtml(info.headcode||"HEADCODE NOT ENTERED")}</strong> &nbsp; | &nbsp; ${escapeHtml(info.date)} &nbsp; | &nbsp; Whole-train reservation list (${reservations.length} reservation legs)`;
+ const info=serviceInfo();
+ const dateParts=(info.date||"").split("-");
+ const displayDate=dateParts.length===3?`${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`:info.date;
+ const now=new Date();
+ const generatedTime=now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",hour12:false});
+ const generatedDate=now.toLocaleDateString("en-GB");
+ document.getElementById("printHeader").innerHTML=`Reservations for <strong>${escapeHtml(info.headcode||"HEADCODE NOT ENTERED")}</strong> on ${escapeHtml(displayDate)}`;
+ document.getElementById("printTime").textContent=generatedTime;
+ document.getElementById("printDate").textContent=generatedDate;
  window.print();
 });
 document.getElementById("reservationText").addEventListener("input",()=>{
