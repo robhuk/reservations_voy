@@ -20,7 +20,9 @@ header h1{font-size:23px;margin:3px 0}
 header p{font-size:13px;margin:0;color:#ffffffd9}
 main{max-width:1000px;margin:17px auto;padding:0 13px 42px}
 .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #17212b08}
-h2{font-size:16px;margin:0 0 10px}
+h2{font-size:16px;margin:0}
+.results-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.results-heading button{flex:0 0 auto;padding:8px 12px}
 .service-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .service-fields input{width:100%;min-width:0;padding:12px;border:1px solid #cbd2da;border-radius:9px;background:#fff;font:inherit}
 #headcode{font:900 20px ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}
@@ -49,26 +51,39 @@ tbody tr:last-child td{border-bottom:0}
 tbody tr:nth-child(even){background:#fafbfc}
 .empty{padding:28px 12px;text-align:center;color:var(--muted);font-size:13px}
 .coach-heading td{background:#f7e9ee!important;color:var(--xc);font-weight:800;border-top:1px solid #e8c9d4}
-#appStatus{font-size:11px;color:#64707d}
 @media(max-width:560px){.service-fields{grid-template-columns:1fr}header{padding:16px}header h1{font-size:21px}.panel{padding:13px}.summary{gap:6px}.metric{padding:8px}.metric strong{font-size:19px}.actions button{flex:1 1 calc(50% - 8px)}textarea{min-height:190px}}
 @media print{
- @page{size:A4 portrait;margin:18mm 12mm 20mm}
- body{background:white;font-size:10pt}
- header,#pastePanel,#exportControls,#appStatusPanel,.no-print{display:none!important}
- main{max-width:none;margin:0;padding:0}
- .panel{border:0;box-shadow:none;padding:0;margin:0}
- #resultsPanel h2{display:none}
- #printHeader{display:block!important;font-size:15pt;font-weight:600;margin:0 0 8mm;padding:0 0 4mm;border-bottom:2px solid #a50034}
+ /* Reserve a dedicated bottom band on every A4 page for the repeating footer. */
+ @page{size:A4 portrait;margin:16mm 12mm 30mm}
+ html,body{background:#fff!important;margin:0!important;padding:0!important}
+ body{font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header,#pastePanel,#exportControls,.no-print{display:none!important}
+ main{display:block!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important}
+ .panel{display:block!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+ #resultsPanel{break-inside:auto!important;overflow:visible!important}
+ #resultsPanel h2{display:none!important}
+ #resultsContent{display:block!important}
+ .results-heading{display:none!important}
+ #printHeader{display:block!important;position:static!important;float:none!important;clear:both!important;
+  box-sizing:border-box;width:100%;font-size:15pt;line-height:1.25;font-weight:600;
+  margin:0 0 8mm!important;padding:0 0 4mm!important;border-bottom:2px solid #a50034;
+  page-break-after:avoid;break-after:avoid}
  #printHeader strong{font-weight:900}
- #printFooter{display:block!important;position:fixed;left:0;right:0;bottom:-14mm;border-top:1px solid #888;padding-top:3mm;font-size:8pt;color:#444;text-align:center}
+ /* Fixed footer repeats on each page; the 30mm page margin keeps table rows clear of it. */
+ #printFooter{display:block!important;position:fixed!important;left:0!important;right:0!important;
+  bottom:-20mm!important;box-sizing:border-box;height:7mm;margin:0!important;padding:2mm 0 0!important;
+  border-top:1px solid #888;font-size:8pt;line-height:1.2;color:#444;text-align:center;
+  background:#fff!important;z-index:9999}
  #printFooter .page-number:before{content:"Page " counter(page) " of " counter(pages) " - "}
- #printMeta{display:none!important}
- #serviceDetails{display:none!important}
- .table-wrap{overflow:visible;border:0}
- table{font-size:8.5pt;white-space:normal}
- th{position:static;background:#eee!important;print-color-adjust:exact}
- th,td{padding:5px;border:1px solid #bbb}
- tr{break-inside:avoid}
+ #printMeta,#serviceDetails{display:none!important}
+ .table-wrap{display:block!important;overflow:visible!important;border:0!important}
+ table{width:100%!important;border-collapse:collapse!important;font-size:8.5pt;white-space:normal!important}
+ thead{display:table-header-group}
+ tfoot{display:table-footer-group}
+ th{position:static!important;background:#eee!important;print-color-adjust:exact}
+ th,td{padding:5px;border:1px solid #bbb;vertical-align:top}
+ tr{break-inside:avoid!important;page-break-inside:avoid!important}
+ .coach-heading{break-after:avoid!important;page-break-after:avoid!important}
 }
 </style>
 </head>
@@ -79,7 +94,6 @@ tbody tr:nth-child(even){background:#fafbfc}
  <p>Paste reservations from Genius, view the whole train and export a clean table</p>
 </header>
 <main>
-<section class="panel" id="appStatusPanel"><div id="appStatus">App ready • your pasted reservation list is saved on this device.</div></section>
 <section class="panel" id="serviceDetails">
  <h2>Train details</h2>
  <div class="service-fields">
@@ -107,12 +121,17 @@ tbody tr:nth-child(even){background:#fafbfc}
 </section>
 
 <section class="panel" id="resultsPanel">
- <h2>Whole-train reservation table</h2>
- <div id="printHeader" style="display:none"></div>
- <div id="printFooter" style="display:none"><span class="page-number"></span>Genius Export - Generated at <span id="printTime"></span> - <span id="printDate"></span></div>
- <div id="printMeta" class="small" style="display:none;margin-bottom:10px"></div>
- <div class="table-wrap" id="tableWrap">
-  <div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>
+ <div class="results-heading">
+  <h2>Whole-train reservation table</h2>
+  <button class="secondary" id="toggleResultsBtn" type="button" aria-expanded="true" aria-controls="resultsContent">Minimise</button>
+ </div>
+ <div id="resultsContent">
+  <div id="printHeader" style="display:none"></div>
+  <div id="printFooter" style="display:none"><span class="page-number"></span>Genius Export - Generated at <span id="printTime"></span> - <span id="printDate"></span></div>
+  <div id="printMeta" class="small" style="display:none;margin-bottom:10px"></div>
+  <div class="table-wrap" id="tableWrap">
+   <div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>
+  </div>
  </div>
 </section>
 
@@ -124,6 +143,20 @@ tbody tr:nth-child(even){background:#fafbfc}
   <option value="legs">Full list – one row per reservation leg</option>
   <option value="grouped">Grouped – one row per seat with all reserved legs</option>
  </select>
+ <div class="filter-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px">
+  <div>
+   <label for="coachFilter">COACH FILTER</label>
+   <input id="coachFilter" type="text" placeholder="e.g. A or A, C" autocomplete="off" style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd2da;border-radius:9px;font:inherit">
+  </div>
+  <div>
+   <label for="seatFilter">SEAT FILTER</label>
+   <input id="seatFilter" type="text" placeholder="e.g. 4A or 4A, 6B" autocomplete="off" style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd2da;border-radius:9px;font:inherit">
+  </div>
+ </div>
+ <div class="actions" style="margin-top:8px">
+  <button class="secondary" id="resetFiltersBtn" type="button">Clear filters</button>
+ </div>
+ <div class="hint" id="filterStatus" aria-live="polite">No filters applied – exporting the whole train.</div>
  <div class="actions">
   <button class="primary" id="copyBtn" type="button" disabled>Copy table</button>
   <button class="secondary" id="csvBtn" type="button" disabled>Download CSV</button>
@@ -180,9 +213,14 @@ function parseReservations(raw){
  });
  return {rows,ignored};
 }
+function filteredReservations(){
+ const coaches=document.getElementById("coachFilter").value.toUpperCase().split(/[ ,;]+/).map(x=>x.trim()).filter(Boolean);
+ const seats=document.getElementById("seatFilter").value.toUpperCase().split(/[ ,;]+/).map(x=>x.trim()).filter(Boolean);
+ return reservations.filter(r=>(!coaches.length||coaches.includes(r.coach))&&(!seats.length||seats.includes(r.seat)));
+}
 function selectedRows(){
  const format=document.getElementById("tableFormat").value;
- const sorted=[...reservations].sort((a,b)=>{
+ const sorted=[...filteredReservations()].sort((a,b)=>{
   const ac=coachOrder.indexOf(a.coach),bc=coachOrder.indexOf(b.coach);
   return (ac<0?99:ac)-(bc<0?99:bc)||parseInt(a.seat)-parseInt(b.seat)||a.seat.localeCompare(b.seat)||a.from.localeCompare(b.from);
  });
@@ -199,6 +237,11 @@ function renderTable(){
  const wrap=document.getElementById("tableWrap");
  if(!reservations.length){wrap.innerHTML='<div class="empty">Paste your Genius reservation list and select <b>Process reservations</b> to display the whole train.</div>';return}
  const rows=selectedRows();
+ if(!rows.length){
+  wrap.innerHTML='<div class="empty">No reservations match the selected coach / seat filters.</div>';
+  updateFilterStatus();
+  return;
+ }
  const headers=["Coach","Seat","Class","Reserved leg(s)","Notes"];
  let html='<table id="reservationTable"><thead><tr>'+headers.map(h=>`<th>${h}</th>`).join("")+'</tr></thead><tbody>';
  let previous="";
@@ -207,6 +250,17 @@ function renderTable(){
   html+=`<tr><td>${escapeHtml(r.coach)}</td><td>${escapeHtml(r.seat)}</td><td>${escapeHtml(r.class)}</td><td>${escapeHtml(r.leg)}</td><td>${escapeHtml(r.notes)}</td></tr>`;
  });
  html+='</tbody></table>';wrap.innerHTML=html;
+ updateFilterStatus();
+}
+function updateFilterStatus(){
+ const coach=document.getElementById("coachFilter").value.trim();
+ const seat=document.getElementById("seatFilter").value.trim();
+ const matches=filteredReservations().length;
+ const total=reservations.length;
+ const active=!!(coach||seat);
+ document.getElementById("filterStatus").textContent=active
+  ? `${matches} of ${total} reservation legs match the selected ${[coach?"coach":"",seat?"seat":""].filter(Boolean).join(" and ")} filter${matches===1?"":"s"}. All export options use this selection.`
+  : `No filters applied – all ${total} reservation legs are included.`;
 }
 function updateSummary(){
  const seats=new Set(reservations.map(r=>r.coach+"|"+r.seat));
@@ -246,6 +300,8 @@ document.getElementById("clearBtn").addEventListener("click",()=>{
  document.getElementById("headcode").value="";
  document.getElementById("serviceDate").value=localToday();
  document.getElementById("tableFormat").value="legs";
+ document.getElementById("coachFilter").value="";
+ document.getElementById("seatFilter").value="";
  try{
   [STORAGE.text,STORAGE.rows,"xcReservations.headcode","xcReservations.date"].forEach(k=>localStorage.removeItem(k));
  }catch(e){}
@@ -255,6 +311,12 @@ document.getElementById("clearBtn").addEventListener("click",()=>{
  document.getElementById("exportStatus").textContent="";
 });
 document.getElementById("tableFormat").addEventListener("change",renderTable);
+["coachFilter","seatFilter"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{renderTable();updateFilterStatus();}));
+document.getElementById("resetFiltersBtn").addEventListener("click",()=>{
+ document.getElementById("coachFilter").value="";
+ document.getElementById("seatFilter").value="";
+ renderTable();updateFilterStatus();
+});
 document.getElementById("copyBtn").addEventListener("click",async()=>{
  const data=tsv(selectedRows());
  try{await navigator.clipboard.writeText(data);document.getElementById("exportStatus").textContent="Table copied. Paste it into Excel, Word or another document."}
@@ -263,15 +325,15 @@ document.getElementById("copyBtn").addEventListener("click",async()=>{
 document.getElementById("csvBtn").addEventListener("click",()=>{
  const blob=new Blob(["\ufeff"+csv(selectedRows())],{type:"text/csv;charset=utf-8"});
  const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="XC-whole-train-reservations.csv";a.click();URL.revokeObjectURL(url);
- document.getElementById("exportStatus").textContent="CSV reservation table downloaded.";
+ a.href=url;a.download="XC-reservations-filtered.csv";a.click();URL.revokeObjectURL(url);
+ document.getElementById("exportStatus").textContent=`CSV downloaded with ${selectedRows().length} matching reservation row(s).`;
 });
 document.getElementById("emailBtn").addEventListener("click",()=>{
  const rows=selectedRows(),body=tsv(rows);
  const info=serviceInfo();const subject=encodeURIComponent(`${info.headcode||"Train"} reservation list – ${info.date}`);
  const mailBody=encodeURIComponent(`HEADCODE: ${info.headcode||"Not entered"}\\nDATE: ${info.date}\\n\\n${body}`);
  window.location.href=`mailto:?subject=${subject}&body=${mailBody}`;
- document.getElementById("exportStatus").textContent="Your email app should open with the reservation table in the message body.";
+ document.getElementById("exportStatus").textContent=`Your email app should open with ${rows.length} matching reservation row(s).`;
 });
 document.getElementById("pdfBtn").addEventListener("click",()=>{
  const info=serviceInfo();
@@ -285,6 +347,14 @@ document.getElementById("pdfBtn").addEventListener("click",()=>{
  document.getElementById("printDate").textContent=generatedDate;
  window.print();
 });
+document.getElementById("toggleResultsBtn").addEventListener("click",()=>{
+ const content=document.getElementById("resultsContent");
+ const button=document.getElementById("toggleResultsBtn");
+ const willCollapse=!content.hidden;
+ content.hidden=willCollapse;
+ button.textContent=willCollapse?"Expand":"Minimise";
+ button.setAttribute("aria-expanded",String(!willCollapse));
+});
 document.getElementById("reservationText").addEventListener("input",()=>{
  try{localStorage.setItem(STORAGE.text,document.getElementById("reservationText").value)}catch(e){}
 });
@@ -294,6 +364,7 @@ try{
  const savedHeadcode=localStorage.getItem("xcReservations.headcode");if(savedHeadcode)document.getElementById("headcode").value=savedHeadcode;
  const savedDate=localStorage.getItem("xcReservations.date");if(savedDate)document.getElementById("serviceDate").value=savedDate;
  displayServiceInfo();
+ updateFilterStatus();
  document.getElementById("headcode").addEventListener("input",e=>{
   e.target.value=e.target.value.toUpperCase().replace(/[^0-9A-Z]/g,"").slice(0,4);
   displayServiceInfo();try{localStorage.setItem("xcReservations.headcode",e.target.value)}catch(err){}
